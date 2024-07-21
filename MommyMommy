@@ -1,0 +1,55 @@
+document.addEventListener('DOMContentLoaded', () => {
+    // Function to add products dynamically
+    function addProduct(containerId, name, description, price) {
+        const container = document.getElementById(containerId);
+        const product = document.createElement('div');
+        product.classList.add('product');
+        product.innerHTML = `
+            <h3>${name}</h3>
+            <p>${description}</p>
+            <p>$${price}</p>
+            <button class="bookmark-btn">Bookmark</button>
+        `;
+        container.appendChild(product);
+    }
+
+    // Sample products for home page (top 10)
+    for (let i = 1; i <= 10; i++) {
+        addProduct('top-products', `Product ${i}`, 'Description for Product ' + i, (i * 10).toFixed(2));
+    }
+
+    // Sample products for trending section
+    for (let i = 1; i <= 5; i++) {
+        addProduct('product-list', `Trending Product ${i}`, 'Description for Trending Product ' + i, (i * 15).toFixed(2));
+    }
+
+    // Bookmark functionality
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('bookmark-btn')) {
+            const product = e.target.parentElement;
+            const bookmarkList = document.getElementById('bookmark-list');
+            bookmarkList.appendChild(product.cloneNode(true));
+        }
+    });
+
+    // Handle user sign-in
+    const loginForm = document.getElementById('login-form');
+    loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Signed in as ' + document.getElementById('email').value);
+    });
+
+    // Sample financial statistics for admin console
+    const adminStats = document.getElementById('admin-stats');
+    const stats = [
+        { label: 'Total Sales', value: '$5000' },
+        { label: 'Total Orders', value: '150' },
+        { label: 'Total Customers', value: '120' }
+    ];
+    stats.forEach(stat => {
+        const statElement = document.createElement('div');
+        statElement.classList.add('admin-stat');
+        statElement.innerHTML = `<h3>${stat.label}</h3><p>${stat.value}</p>`;
+        adminStats.appendChild(statElement);
+    });
+});
